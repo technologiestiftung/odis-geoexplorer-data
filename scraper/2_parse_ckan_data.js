@@ -14,10 +14,12 @@ function parseCKANData(mainCallback) {
     fs.readFileSync(path.join(dirName, "data/ckan_data.json"), "utf-8")
   );
 
-  const allGeoData = [];
+  const newDatasets = [];
+  const allDatasets = [];
   ckanData.map((item) => {
     let geoResource;
     let geoData = {};
+    // get only WFS and WMS
     item.resources.forEach(function (resource) {
       if (
         (resource.url.includes("REQUEST=GetCapabilities&SERVICE=wms") ||
@@ -30,6 +32,7 @@ function parseCKANData(mainCallback) {
 
     if (!geoResource) return;
 
+    // get the metadata about the geo data
     geoData.title = item.title;
     geoData.serviceURL = removeParametersFromURL(geoResource.url);
     geoData.type = geoResource.format;
@@ -44,8 +47,6 @@ function parseCKANData(mainCallback) {
       if (resource.format === "PDF") {
         geoData.pdf = resource.url;
       }
-    });
-    item.resources.forEach(function (resource) {
       if (
         resource.format === "HTML" &&
         resource.description === "Technische Beschreibung"
@@ -54,19 +55,37 @@ function parseCKANData(mainCallback) {
       }
     });
 
-    allGeoData.push(geoData);
+    // check if the dataset has a folder
+    // if not add one and write file
+    const filePath = `./data/datasets/${geoData.name}`;
+    if (!fs.existsSync(filePath)) {
+      newDatasets.push(geoData.name);
+      fs.mkdirSync(filePath, { recursive: true });
+      fs.writeFileSync(filePath + "/ckan.json", JSON.stringify(geoData));
+    }
+    allDatasets.push(geoData.name);
   });
 
-  console.log("Amount of datasets: ", allGeoData.length);
+  console.log("Amount of all datasets: ", newDatasets.length);
+  console.log("Amount of new datasets: ", allDatasets.length);
 
   fs.writeFile(
-    "./data/ckan_data_filtered.json",
-    JSON.stringify(allGeoData),
+    "./data/datasetsNew.json",
+    JSON.stringify(newDatasets),
     {
       encoding: "utf8",
     },
     (err) => {
-      mainCallback();
+      fs.writeFile(
+        "./data/datasetsAll.json",
+        JSON.stringify(allDatasets),
+        {
+          encoding: "utf8",
+        },
+        (err) => {
+          mainCallback();
+        }
+      );
     }
   );
 }

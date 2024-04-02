@@ -4,25 +4,31 @@ const { JSDOM } = require("jsdom");
 var TurndownService = require("turndown");
 var turndownPluginGfm = require("turndown-plugin-gfm");
 
-function htmlToMarkdownTable(html) {
-  var markdownTable = "";
-  // Parse HTML table structure using jsdom
-  const dom = new JSDOM(html);
-  const rows = dom.window.document.querySelectorAll("tr");
+const {
+  NodeHtmlMarkdown,
+  //   NodeHtmlMarkdownOptions,
+} = require("node-html-markdown");
+// test = NodeHtmlMarkdown.translate(html);
 
-  // Construct Markdown table
-  rows.forEach(function (row) {
-    var cells = row.querySelectorAll("td, th");
-    var rowContent = "";
-    cells.forEach(function (cell, index) {
-      var content = cell.textContent.trim();
-      rowContent += (index > 0 ? " | " : "") + content;
-    });
-    markdownTable += rowContent + "\n";
-  });
+// function htmlToMarkdownTable(html) {
+//   var markdownTable = "";
+//   // Parse HTML table structure using jsdom
+//   const dom = new JSDOM(html);
+//   const rows = dom.window.document.querySelectorAll("tr");
 
-  return markdownTable;
-}
+//   // Construct Markdown table
+//   rows.forEach(function (row) {
+//     var cells = row.querySelectorAll("td, th");
+//     var rowContent = "";
+//     cells.forEach(function (cell, index) {
+//       var content = cell.textContent.trim();
+//       rowContent += (index > 0 ? " | " : "") + content;
+//     });
+//     markdownTable += rowContent + "\n";
+//   });
+
+//   return markdownTable;
+// }
 
 async function getHtmlAsMarkdown(url) {
   const response = await fetch(url);
@@ -36,39 +42,57 @@ async function getHtmlAsMarkdown(url) {
   // Read the response body as an ArrayBuffer
   const buffer = await response.arrayBuffer();
   // Convert ISO-8859-1 to UTF-8
-  const decoder = new TextDecoder("iso-8859-1");
-  const utf8Text = decoder.decode(buffer);
-  const dom = new JSDOM(utf8Text);
-  const document = dom.window.document;
+  //   const decoder = new TextDecoder("iso-8859-1");
+  //   const utf8Text = decoder.decode(buffer);
+  const dom = new JSDOM(buffer);
+  //   const document = dom.window.document;
+  const documentString = dom.serialize();
+  //   console.log(documentString);
 
-  const titleTag = document.querySelector("title");
-  const title = titleTag ? `- Title: ${titleTag.textContent.trim()}\n` : "";
+  let markdown = NodeHtmlMarkdown.translate(documentString);
 
-  var turndownService = new TurndownService();
-  var tables = turndownPluginGfm.tables;
-  turndownService.use([tables]);
-  var markdown = turndownService.turndown(document);
+  console.log(markdown);
 
-  // Extract the table using regular expressions
-  var tableRegex = /<table[\s\S]*?<\/table>/;
-  var tableMatches = markdown.match(tableRegex);
-  var tableHtml = tableMatches ? tableMatches[0] : "";
+  //   const titleTag = document.querySelector("title");
+  //   const title = titleTag ? `- Title: ${titleTag.textContent.trim()}\n` : "";
 
-  // Replace the extracted table with desired content
-  markdown = markdown.replace(tableHtml, htmlToMarkdownTable(tableHtml));
+  //   var turndownService = new TurndownService();
+  //   var tables = turndownPluginGfm.tables;
+  //   turndownService.use([tables]);
+  //   var markdown = turndownService.turndown(document);
 
-  if (markdown) {
-    markdown = "- Content: " + markdown;
-    markdown += "\n";
-  }
+  //   // Extract all tables using regular expressions
+  //   var tableRegex = /<table[^>]*>[\s\S]*?<\/table>/g;
+  //   var tableMatches = markdown.match(tableRegex) || [];
 
-  let htmlText = `${title}${markdown}`;
+  //   // Replace all tables
+  //   for (var i = 0; i < tableMatches.length; i++) {
+  //     var tableHtml = tableMatches[i];
+  //     markdown = markdown.replace(tableHtml, htmlToMarkdownTable(tableHtml));
+  //   }
 
-  return htmlText;
+  //   if (markdown) {
+  //     // markdown = markdown.replace(/\n\s*\n/g, "\n");
+
+  //     markdown = "- Content: " + markdown;
+  //     markdown += "\n";
+  //   }
+
+  //   //   let htmlText = `${title}${markdown}`;
+  //   let htmlText = `${markdown}`;
+
+  return markdown;
 }
 
+// const url =
+//   "https://fbinter.stadt-berlin.de/fb_daten/beschreibung/umweltatlas/datenformatbeschreibung/Datenformatbeschreibung_07_05_str_vbus2017.html";
+
+// getHtmlAsMarkdown(url);
 module.exports = { getHtmlAsMarkdown };
 
+// getHtmlAsMarkdown(
+//   "https://fbinter.stadt-berlin.de/fb_daten/beschreibung/datenformatbeschreibung/Datenformatbeschreibung_eladeinfrstr.html"
+// );
 // const link =
 // // "https://fbinter.stadt-berlin.de/fb/?loginkey=alphaDataStart&alphaDataId=s_brw_2011@senstadt";
 // "https://fbinter.stadt-berlin.de/fb_daten/beschreibung/umweltatlas/datenformatbeschreibung/Datenformatbeschreibung_06_06einwohnerdichte2015.html";
