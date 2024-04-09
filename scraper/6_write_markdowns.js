@@ -12,6 +12,90 @@ function replaceLinks(text) {
 }
 let index = 0;
 
+function writeSingleMarkdown(
+  name,
+  mainTitle,
+  ckan,
+  attributes,
+  attributesDescription,
+  htmlDescription
+) {
+  let markdown = "";
+
+  ckan["title"] = attributes?.title ? attributes.title : mainTitle;
+  markdown += "# " + ckan["title"] + "\n";
+
+  // CkAN DATA
+  const keyFullNames = {
+    title: "Titel",
+    serviceURL: "Service URL",
+    url: "Fisbroker URL",
+    techHtml: "Beschreibung URL",
+    type: "Typ",
+    name: "Name",
+    tags: "Stichworte",
+    notes: "Anmerkung",
+    author: "Autor",
+    pdf: "", // not added to final data
+  };
+  for (const key in ckan) {
+    if (key === "pdf" || !keyFullNames[key]) {
+    } else {
+      markdown += "- " + keyFullNames[key] + ": ";
+
+      if (key === "tag") {
+        markdown += ckan[key].toString().trim();
+      } else if (key === "notes") {
+        let text = ckan[key].split("\n\n![Vorschaugrafik zu Datensatz")[0];
+        text = text.replace(/\n\s*\n/g, "\n");
+
+        markdown += text;
+      } else {
+        markdown += ckan[key];
+      }
+      markdown += " $$$\n";
+    }
+  }
+
+  if (attributes?.title) {
+    markdown += "- Teildatensatz von: " + mainTitle + " $$$\n";
+  }
+
+  if (attributes) {
+    // console.log("attributes", attributes);
+    if (attributes.attributes) {
+      markdown += "- Attribute: ";
+      markdown += attributes.attributes.toString().trim();
+      markdown += " $$$\n";
+    }
+    if (attributes.typeName) {
+      markdown += "- Layer Name: ";
+      markdown += attributes.typeName.toString().trim();
+      markdown += " $$$\n";
+    }
+  }
+
+  if (attributesDescription && attributesDescription.length !== 0) {
+    markdown += "- Attribute Beschreibung: ";
+    markdown += attributesDescription.toString().trim();
+    markdown += " $$$\n";
+  }
+
+  if (htmlDescription) {
+    markdown += "- Beschreibung: ";
+    markdown += replaceLinks(htmlDescription);
+    markdown += " $$$\n";
+  }
+  index++;
+
+  const fileName =
+    name +
+    (attributes?.title
+      ? "--" + attributes.title.replaceAll(" ", "").replaceAll("/", "-")
+      : "");
+  fs.writeFileSync(`./data/markdowns/${fileName}.mdx`, markdown);
+}
+
 function writeMarkdowns(mainCallback) {
   let listDatasets = JSON.parse(fs.readFileSync(LIST_DATASETS));
 
@@ -19,19 +103,16 @@ function writeMarkdowns(mainCallback) {
     .then(() => {
       console.log("Directory emptied successfully");
       listDatasets.map((name) => {
-        index++;
         let attributes;
         let attributesDescription;
         let htmlDescription;
         let ckan;
-        let markdown = "";
+
         try {
           ckan = JSON.parse(
             fs.readFileSync(`./data/datasets/${name}/ckan.json`)
           );
-        } catch (error) {
-          console.log("!!!!!! ", name);
-        }
+        } catch (error) {}
         try {
           attributes = JSON.parse(
             fs.readFileSync(`./data/datasets/${name}/attributes.json`)
@@ -50,66 +131,32 @@ function writeMarkdowns(mainCallback) {
           );
         } catch (error) {}
 
-        const keyFullNames = {
-          title: "Titel",
-          serviceURL: "Service URL",
-          url: "Fisbroker URL",
-          techHtml: "Beschreibung URL",
-          type: "Typ",
-          name: "Name",
-          tags: "Stichworte",
-          notes: "Anmerkung",
-          author: "Autor",
-          pdf: "nooooo - not added to final data",
-        };
-        console.log("ckan", ckan);
-        ckan["title"] = ckan["title"]
+        const mainTitle = ckan.title
           .replace("- [WFS]", "")
           .replace("- [WMS]", "")
           .trim();
 
-        markdown += "# " + ckan["title"] + "\n";
-
-        // CkAN DATA
-        for (const key in ckan) {
-          if (key === "pdf" || !keyFullNames[key]) {
-          } else {
-            markdown += "- " + keyFullNames[key] + ": ";
-
-            if (key === "tag") {
-              markdown += ckan[key].toString().trim();
-            } else if (key === "notes") {
-              let text = ckan[key].split(
-                "\n\n![Vorschaugrafik zu Datensatz"
-              )[0];
-              text = text.replace(/\n\s*\n/g, "\n");
-
-              markdown += text;
-            } else {
-              markdown += ckan[key];
-            }
-            markdown += " $$$\n";
-          }
+        if (attributes && attributes.length) {
+          attributes.forEach((attr) => {
+            writeSingleMarkdown(
+              name,
+              mainTitle,
+              ckan,
+              attr,
+              attributesDescription,
+              htmlDescription
+            );
+          });
+        } else {
+          writeSingleMarkdown(
+            name,
+            mainTitle,
+            ckan,
+            attributes,
+            attributesDescription,
+            htmlDescription
+          );
         }
-
-        if (attributes) {
-          markdown += "- Attribute: ";
-          markdown += attributes.toString().trim();
-          markdown += " $$$\n";
-        }
-
-        if (attributesDescription && attributesDescription.length !== 0) {
-          markdown += "- Attribute Beschreibung: ";
-          markdown += attributesDescription.toString().trim();
-          markdown += " $$$\n";
-        }
-
-        if (htmlDescription) {
-          markdown += "- Beschreibung: ";
-          markdown += replaceLinks(htmlDescription);
-          markdown += " $$$\n";
-        }
-        fs.writeFileSync(`./data/markdowns/${name}.mdx`, markdown);
       });
       console.log("Markdown written. Count:", index);
       mainCallback();

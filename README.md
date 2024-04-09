@@ -6,40 +6,11 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-# {repo-template}
+# GeoExplorer Scraper
 
-## TODO (after you generated the repo)
+A scraper that gets all WFS & WMS related data from
 
-- [ ] Review the content of the README.md and adjust to your liking
-- [ ] Read the README.md till the end and adjust the content licensing,
-      logos, etc (I know you stopped at tbd...)
-- [ ] Adjust the file [.github/CODEOWNERS](./.github/CODEOWNERS)
-- [ ] Adjust the files under [.github/ISSUE_TEMPLATE](./.github/ISSUE_TEMPLATE)
-- [ ] If you use staging and main branches use this template for [.github/renovate.json](./.github/renovate.json)
-
-```json
-{
-	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["github>technologiestiftung/renovate-config"],
-	"baseBranches": ["staging"]
-}
-```
-
-- [ ] Do you want to honor all kinds of contributions? Use [all-contributors](https://allcontributors.org/)
-
-```bash
-npx all-contributors-cli check
-npx all-contributors-cli add ff6347 doc
-```
-
-You can use it on GitHub just by commenting on PRs and issues:
-
-```plain
-@all-contributors please add @ff6347 for infrastructure, tests and code
-```
-
-- [ ] Add your project description
-- [ ] Get fancy shields at https://shields.io
+If you want to update the data, set RUN_UPDATE=true in the index.js file.
 
 ## Prerequisites
 
@@ -49,15 +20,76 @@ tbd...
 
 tbd...
 
+1668
+
 ## Usage or Deployment
 
 tbd...
 
-## Development
+## Error List
 
-tbd...
+getAttributes:
 
-## Tests
+```json
+[
+  [
+    "geplante-bodennutzung-im-inspire-datenmodell-vorbereitende-untersuchungen-wfs-957b197b",
+    "https://gdi.berlin.de/services/wfs/plu_vorunter?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "geplante-bodennutzung-im-inspire-datenmodell-vorkaufsrechtsverordnungen-wfs-d4a2dd64",
+    "https://gdi.berlin.de/services/wfs/plu_vorkauf?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "geplante-bodennutzung-im-inspire-datenmodell-lapro-programmplan-biotop-und-artenschutz-wfs-ea2aa0f3",
+    "https://gdi.berlin.de/services/wfs/plu_laproba?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "statistische-einheiten-im-inspire-datenmodell-rbs-blocke-wfs-7812889a",
+    "https://gdi.berlin.de/services/wfs/su_blk?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "standorte-offentlich-bestellter-vermessungsingenieure-wfs-8e0e19f4",
+    "https://gdi.berlin.de/services/wfs/?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "geplante-bodennutzung-im-inspire-datenmodell-entwicklungsbereiche-wfs-408d87ea",
+    "https://gdi.berlin.de/services/wfs/plu_entwicklung?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "offentliche-beleuchtung-wfs-77fc5415",
+    "https://fbinter.stadt-berlin.de/fb/wfs/data/senstadt/s_oeffbeleucht?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "geplante-bodennutzung-im-inspire-datenmodell-bebauungsplane-wfs-c208b00d",
+    "https://gdi.berlin.de/services/wfs/plu_bplan?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "staatliche-dienste-im-inspire-datenmodell-kinderbetreuung-wfs-66fba5a1",
+    "https://gdi.berlin.de/services/wfs/us_kita?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "geplante-bodennutzung-im-inspire-datenmodell-sanierungsgebiete-wfs-2d834565",
+    "https://gdi.berlin.de/services/wfs/plu_sanierung?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "verwaltungseinheiten-im-inspire-datenmodell-wfs-1cc18674",
+    "https://gdi.berlin.de/services/wfs/au_alkis?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "statistische-einheiten-im-inspire-datenmodell-lebensweltlich-orientierte-raume-01-01-2021-w-e1db65af",
+    "https://gdi.berlin.de/services/wfs/su_lor?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "geplante-bodennutzung-im-inspire-datenmodell-erhaltungsverordnungsgebiete-wfs-5dd19de2",
+    "https://gdi.berlin.de/services/wfs/plu_erhalt?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ],
+  [
+    "staatliche-dienste-im-inspire-datenmodell-sozialdienst-wfs-3fefda69",
+    "https://gdi.berlin.de/services/wfs/us_jfe?REQUEST=DescribeFeatureType&SERVICE=WFS&VERSION=2.0.0"
+  ]
+]
+```
 
 tbd...
 
@@ -87,8 +119,6 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 ## Content Licensing
 
 Texts and content available as [CC BY](https://creativecommons.org/licenses/by/3.0/de/).
-
-Illustrations by {MARIA_MUSTERFRAU}, all rights reserved.
 
 ## Credits
 

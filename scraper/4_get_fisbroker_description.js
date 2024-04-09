@@ -11,6 +11,7 @@ function getFisBrokerDescription(mainCallback) {
       let datasetInfo = JSON.parse(
         fs.readFileSync(`./data/datasets/${datasetName}/ckan.json`)
       );
+      console.log("getting info for: ", datasetName);
 
       const url = datasetInfo.url;
       let fisBrokerData = "";
@@ -23,7 +24,7 @@ function getFisBrokerDescription(mainCallback) {
           url.includes("loginkey=alphaDataStart&alphaDataId")
         ) {
           fisBrokerData = await getHtmlViaPuppeteer(url);
-          // console.log("fisBrokerData: ", fisBrokerData);
+          console.log("fisBrokerData: ", fisBrokerData);
           await new Promise((resolve) => setTimeout(resolve, 1000));
         }
 
