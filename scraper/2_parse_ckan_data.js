@@ -22,8 +22,12 @@ function parseCKANData(mainCallback) {
     // get only WFS and WMS
     item.resources.forEach(function (resource) {
       if (
-        (resource.url.includes("REQUEST=GetCapabilities&SERVICE=wms") ||
-          resource.url.includes("REQUEST=GetCapabilities&SERVICE=wfs")) &&
+        (resource.url
+          .toLowerCase()
+          .includes("REQUEST=GetCapabilities&SERVICE=wms".toLowerCase()) ||
+          resource.url
+            .toLowerCase()
+            .includes("REQUEST=GetCapabilities&SERVICE=wfs".toLowerCase())) &&
         (resource.format === "WFS" || resource.format === "WMS")
       ) {
         geoResource = resource;
@@ -55,19 +59,27 @@ function parseCKANData(mainCallback) {
       }
     });
 
+    const existingFiles = fs.readFileSync(
+      path.join(dirName, "data/datasetsAll.json"),
+      "utf-8"
+    );
+
+    if (!existingFiles.includes(geoData.name)) {
+      newDatasets.push(geoData.name);
+    }
+
     // check if the dataset has a folder
     // if not add one and write file
     const filePath = `./data/datasets/${geoData.name}`;
     if (!fs.existsSync(filePath)) {
-      newDatasets.push(geoData.name);
       fs.mkdirSync(filePath, { recursive: true });
       fs.writeFileSync(filePath + "/ckan.json", JSON.stringify(geoData));
     }
     allDatasets.push(geoData.name);
   });
 
-  console.log("Amount of all datasets: ", newDatasets.length);
-  console.log("Amount of new datasets: ", allDatasets.length);
+  console.log("Amount of new datasets: ", newDatasets.length);
+  console.log("Amount of all datasets: ", allDatasets.length);
 
   fs.writeFile(
     "./data/datasetsNew.json",
@@ -76,16 +88,16 @@ function parseCKANData(mainCallback) {
       encoding: "utf8",
     },
     (err) => {
-      fs.writeFile(
-        "./data/datasetsAll.json",
-        JSON.stringify(allDatasets),
-        {
-          encoding: "utf8",
-        },
-        (err) => {
-          mainCallback();
-        }
-      );
+      // fs.writeFile(
+      //   "./data/datasetsAll.json",
+      //   JSON.stringify(allDatasets),
+      //   {
+      //     encoding: "utf8",
+      //   },
+      //   (err) => {
+      mainCallback();
+      //   }
+      // );
     }
   );
 }

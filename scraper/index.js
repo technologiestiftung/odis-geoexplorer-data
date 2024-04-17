@@ -2,7 +2,7 @@ async = require("async");
 path = require("path");
 dirName = __dirname;
 
-const RUN_UPDATE = false;
+const RUN_UPDATE = true;
 LIST_DATASETS = RUN_UPDATE
   ? "./data/datasetsNew.json"
   : "./data/datasetsAll.json";
@@ -16,6 +16,16 @@ const { writeMarkdowns } = require("./6_write_markdowns.js");
 const { countTokens } = require("./7_count_tokens.js");
 
 // run these functions in order
-async.waterfall([writeMarkdowns], function (err, result) {
-  console.log("All scraper scripts have run");
-});
+async.waterfall(
+  [
+    // getCKANData,
+    // parseCKANData,
+    // getAttributes,
+    // getFisBrokerDescription,
+    getHtmlInfo,
+    // writeMarkdowns,
+  ],
+  function (err, result) {
+    console.log("All scraper scripts have run");
+  }
+);
