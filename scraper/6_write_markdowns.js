@@ -93,13 +93,13 @@ function writeSingleMarkdown(
     (attributes?.title
       ? "--" + attributes.title.replaceAll(" ", "").replaceAll("/", "-")
       : "");
-  fs.writeFileSync(`./data/markdowns/${fileName}.mdx`, markdown);
+  fs.writeFileSync(`./markdowns/${fileName}.mdx`, markdown);
 }
 
 function writeMarkdowns(mainCallback) {
   let listDatasets = JSON.parse(fs.readFileSync(LIST_DATASETS));
 
-  fs.emptyDir("./data/markdowns")
+  fs.emptyDir("./markdowns")
     .then(() => {
       console.log("Directory emptied successfully");
       listDatasets.map((name) => {
@@ -110,24 +110,26 @@ function writeMarkdowns(mainCallback) {
 
         try {
           ckan = JSON.parse(
-            fs.readFileSync(`./data/datasets/${name}/ckan.json`)
+            fs.readFileSync(`./scraper/data/datasets/${name}/ckan.json`)
           );
         } catch (error) {}
         try {
           attributes = JSON.parse(
-            fs.readFileSync(`./data/datasets/${name}/attributes.json`)
+            fs.readFileSync(`./scraper/data/datasets/${name}/attributes.json`)
           );
         } catch (error) {}
         try {
           attributesDescription = JSON.parse(
             fs.readFileSync(
-              `./data/datasets/${name}/attributesDescription.json`
+              `./scraper/data/datasets/${name}/attributesDescription.json`
             )
           );
         } catch (error) {}
         try {
           htmlDescription = JSON.parse(
-            fs.readFileSync(`./data/datasets/${name}/htmlDescription.json`)
+            fs.readFileSync(
+              `./scraper/data/datasets/${name}/htmlDescription.json`
+            )
           );
         } catch (error) {}
 

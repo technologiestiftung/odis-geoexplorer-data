@@ -45,7 +45,7 @@ function getCKANData(mainCallback) {
     fetchAllEntries()
       .then((data) => {
         fs.writeFile(
-          "./data/ckan_data.json",
+          "./scraper/data/ckan_data.json",
           JSON.stringify(data),
           {
             encoding: "utf8",

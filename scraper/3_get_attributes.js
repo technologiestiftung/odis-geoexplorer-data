@@ -95,7 +95,7 @@ function getAttributes(mainCallback) {
       // console.log("wfsUrl:", wfsUrl);
       console.log("ATTRIBUTES: ", JSON.stringify(attributes));
       fs.writeFileSync(
-        `./data/datasets/${datasetName}/attributes.json`,
+        `./scraper/data/datasets/${datasetName}/attributes.json`,
         JSON.stringify(attributes)
       );
     } catch (error) {
@@ -110,7 +110,7 @@ function getAttributes(mainCallback) {
   async function run() {
     for (const datasetName of listDatasets) {
       let datasetInfo = JSON.parse(
-        fs.readFileSync(`./data/datasets/${datasetName}/ckan.json`)
+        fs.readFileSync(`./scraper/data/datasets/${datasetName}/ckan.json`)
       );
 
       if (datasetInfo.type === "WFS") {

@@ -11,7 +11,7 @@ function parseCKANData(mainCallback) {
   console.log("2. parseCKANData ...");
 
   let ckanData = JSON.parse(
-    fs.readFileSync(path.join(dirName, "data/ckan_data.json"), "utf-8")
+    fs.readFileSync(path.join(dirName, "/data/ckan_data.json"), "utf-8")
   );
 
   const newDatasets = [];
@@ -70,7 +70,7 @@ function parseCKANData(mainCallback) {
 
     // check if the dataset has a folder
     // if not add one and write file
-    const filePath = `./data/datasets/${geoData.name}`;
+    const filePath = `./scraper/data/datasets/${geoData.name}`;
     if (!fs.existsSync(filePath)) {
       fs.mkdirSync(filePath, { recursive: true });
       fs.writeFileSync(filePath + "/ckan.json", JSON.stringify(geoData));
@@ -82,22 +82,22 @@ function parseCKANData(mainCallback) {
   console.log("Amount of all datasets: ", allDatasets.length);
 
   fs.writeFile(
-    "./data/datasetsNew.json",
+    "./scraper/data/datasetsNew.json",
     JSON.stringify(newDatasets),
     {
       encoding: "utf8",
     },
     (err) => {
-      // fs.writeFile(
-      //   "./data/datasetsAll.json",
-      //   JSON.stringify(allDatasets),
-      //   {
-      //     encoding: "utf8",
-      //   },
-      //   (err) => {
-      mainCallback();
-      //   }
-      // );
+      fs.writeFile(
+        "./data/datasetsAll.json",
+        JSON.stringify(allDatasets),
+        {
+          encoding: "utf8",
+        },
+        (err) => {
+          mainCallback();
+        }
+      );
     }
   );
 }

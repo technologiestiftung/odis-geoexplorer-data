@@ -9,7 +9,7 @@ function getHtmlInfo(mainCallback) {
   async function run() {
     for (const datasetName of listDatasets) {
       let datasetInfo = JSON.parse(
-        fs.readFileSync(`./data/datasets/${datasetName}/ckan.json`)
+        fs.readFileSync(`./scraper/data/datasets/${datasetName}/ckan.json`)
       );
 
       const url = datasetInfo.techHtml;
@@ -21,7 +21,7 @@ function getHtmlInfo(mainCallback) {
           await new Promise((resolve) => setTimeout(resolve, 500));
           if (!htmlData.includes('Startseite von "Umweltatlas Berlin"')) {
             fs.writeFileSync(
-              `./data/datasets/${datasetName}/htmlDescription.json`,
+              `./scarper/data/datasets/${datasetName}/htmlDescription.json`,
               JSON.stringify(htmlData ? htmlData : [])
             );
           }

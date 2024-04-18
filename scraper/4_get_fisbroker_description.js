@@ -9,7 +9,7 @@ function getFisBrokerDescription(mainCallback) {
   async function run() {
     for (const datasetName of listDatasets) {
       let datasetInfo = JSON.parse(
-        fs.readFileSync(`./data/datasets/${datasetName}/ckan.json`)
+        fs.readFileSync(`./scraper/data/datasets/${datasetName}/ckan.json`)
       );
       console.log("getting info for: ", datasetName);
 
@@ -29,7 +29,7 @@ function getFisBrokerDescription(mainCallback) {
         }
 
         fs.writeFileSync(
-          `./data/datasets/${datasetName}/attributesDescription.json`,
+          `./scraper/data/datasets/${datasetName}/attributesDescription.json`,
           JSON.stringify(fisBrokerData ? fisBrokerData : [])
         );
       } catch (error) {
