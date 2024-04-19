@@ -16,6 +16,13 @@ If you want to update the data, set RUN_UPDATE=true in the index.js file.
 
 tbd...
 
+## Running the jupyter notebook to create network graph
+
+```code
+pip install notebook
+jupyter notebook
+```
+
 ## Installation
 
 tbd...
