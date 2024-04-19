@@ -44,14 +44,14 @@ function writeSingleMarkdown(
       markdown += "- " + keyFullNames[key] + ": ";
 
       if (key === "tag") {
-        markdown += ckan[key].toString().trim();
+        markdown += "`" + ckan[key].toString().trim() + "`";
       } else if (key === "notes") {
         let text = ckan[key].split("\n\n![Vorschaugrafik zu Datensatz")[0];
         text = text.replace(/\n\s*\n/g, "\n");
 
-        markdown += text;
+        markdown += "`" + text + "`";
       } else {
-        markdown += ckan[key];
+        markdown += "`" + ckan[key] + "`";
       }
       markdown += " $$$\n";
     }
@@ -65,25 +65,25 @@ function writeSingleMarkdown(
     // console.log("attributes", attributes);
     if (attributes.attributes) {
       markdown += "- Attribute: ";
-      markdown += attributes.attributes.toString().trim();
+      markdown += "`" + attributes.attributes.toString().trim() + "`";
       markdown += " $$$\n";
     }
     if (attributes.typeName) {
       markdown += "- Layer Name: ";
-      markdown += attributes.typeName.toString().trim();
+      markdown += "`" + attributes.typeName.toString().trim() + "`";
       markdown += " $$$\n";
     }
   }
 
   if (attributesDescription && attributesDescription.length !== 0) {
     markdown += "- Attribute Beschreibung: ";
-    markdown += attributesDescription.toString().trim();
+    markdown += "`" + attributesDescription.toString().trim() + "`";
     markdown += " $$$\n";
   }
 
   if (htmlDescription) {
     markdown += "- Beschreibung: ";
-    markdown += replaceLinks(htmlDescription);
+    markdown += "`" + replaceLinks(htmlDescription) + "`";
     markdown += " $$$\n";
   }
   index++;

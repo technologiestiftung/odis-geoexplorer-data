@@ -23,6 +23,12 @@ pip install notebook
 jupyter notebook
 ```
 
+or
+
+```code
+npm run embedgraph
+```
+
 ## Installation
 
 tbd...

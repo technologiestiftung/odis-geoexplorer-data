@@ -1,1 +1,21 @@
-["statistische-blocke-des-rbs-wfs-ec4ec6b1"]
+[
+  "bodenkundliche-kartierungen-ubersicht-wfs-3553f657",
+  "einwohnerdichte-2016-umweltatlas-wms-8a212a8c",
+  "luftreinhalteplan-2011-2017-szenarios-kfz-verkehr-2015-mb1-fahrzeugtechnik-wfs-dca355f5",
+  "luftreinhalteplan-2011-2017-szenarios-kfz-verkehr-2015-mb2-verkehrsfluss-wfs-82013edc",
+  "luftreinhalteplan-2011-2017-szenarios-kfz-verkehr-2015-mb3-tempo-30-hotspots-wfs-93772dad",
+  "luftreinhalteplan-2011-2017-szenarios-kfz-verkehr-2015-mb4-stadt-hintergrund-wfs-be00757b",
+  "luftreinhalteplan-2011-2017-szenarios-kfz-verkehr-2015-mb5-kfz-flotte-2020-wfs-9f307c82",
+  "luftreinhalteplan-2011-2017-szenarios-no2-kfz-verkehr-2015-umweltatlas-wms-519c91a2",
+  "luftreinhalteplan-2011-2017-szenarios-pm10-kfz-verkehr-2015-umweltatlas-wms-5b491b45",
+  "verkehrsbedingte-emissionen-2009-umweltatlas-wfs-995e2417",
+  "verkehrsbedingte-emissionen-2009-umweltatlas-wms-199de9f4",
+  "verkehrsbedingte-emissionen-2015-umweltatlas-wfs-dc079298",
+  "verkehrsbedingte-luftbelastung-2009-umweltatlas-wms-43f6dd96",
+  "verkehrsbedingte-luftbelastung-im-strassenraum-2015-umweltatlas-wfs-6d60b435",
+  "verkehrsbedingte-luftbelastung-im-strassenraum-2015-umweltatlas-wms-7faad8cb",
+  "verkehrsbedingte-luftbelastung-im-strassenraum-2015-und-2020-umweltatlas-wfs-51ad66d7",
+  "verkehrsbedingte-luftbelastung-im-strassenraum-2015-und-2020-umweltatlas-wms-18b34fcb",
+  "verkehrsbedingte-luftbelastung-im-strassenraum-2020-und-2025-umweltatlas-wfs-88780d79",
+  "verkehrsmengen-dtv-2014-umweltatlas-wms-93f2bfbe"
+]

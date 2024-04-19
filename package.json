@@ -3,7 +3,8 @@
     "embeddings": "tsx embedding/generate-embeddings.ts",
     "embeddings:refresh": "tsx lib/generate-embeddings.ts --refresh",
     "scrape": "tsx scraper/index.js",
-    "scrape:update": "tsx scraper/index.js --update"
+    "scrape:update": "tsx scraper/index.js --update",
+    "embedgraph": "cd createGraph; jupyter notebook"
   },
   "dependencies": {
     "async": "^3.2.5",
