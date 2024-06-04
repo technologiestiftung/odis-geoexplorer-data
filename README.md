@@ -14,7 +14,7 @@ This repository includes all logic around the data needed for the [GeoExplorer](
 - A script to create and write **embeddings** to a DB using OpenAIs and Supabase APIs. [🔗](#embeddings)
 - A script to run a Jupyter notebook to **analyze and export the embeddings**. [🔗](#notebook)
 
-### Scraper {#scraper}
+### Scraper<a id='scraper'></a>
 
 The scraper (located in the [scraper folder](./scraper/)) gets all WFS & WMS related metadata from [Berlin's Open Data Portal](https://daten.berlin.de/) and [Berlin's Geo Data Portal (FisBroker)](https://fbinter.stadt-berlin.de/fb/) and writes a markdown file (.mdx) for each dataset. The scraper has multiple steps which you can control in the [index.js](./scraper/index.js) by (un)commenting them.
 
@@ -36,7 +36,7 @@ Or if you want to update the data:
 npm run scrape:update
 ```
 
-### Setting up a Supabase DB and creating embeddings {#embeddings}
+### Setting up a Supabase DB and creating embeddings<a id='embeddings'></a>
 
 **1. Set up a local Supabase DB** (optional)
 
@@ -82,7 +82,7 @@ npx supabase link --project-ref SUPABASE_DB_PASSWORD
 npx supabase db push
 ```
 
-### Running Jupyter notebook to analyze and export the embeddings. {#notebook}
+### Running Jupyter notebook to analyze and export the embeddings.<a id='notebook'></a>
 
 Go to your graphical interface of your Supabase DB (e.g., http://localhost:54323/project/default/editor) and export the _nods_page_section_rows_ table as a .csv file. Save the file in the [createGraph](/createGraph/) folder. Then install **jupyter notebook** via pip if you haven't installed it yet.
 
