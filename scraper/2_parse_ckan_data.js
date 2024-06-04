@@ -89,7 +89,7 @@ function parseCKANData(mainCallback) {
     },
     (err) => {
       fs.writeFile(
-        "./data/datasetsAll.json",
+        "./scraper/data/datasetsAll.json",
         JSON.stringify(allDatasets),
         {
           encoding: "utf8",

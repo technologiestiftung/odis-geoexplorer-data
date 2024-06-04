@@ -1,3 +1,4 @@
+// a helper script to delete files by filename
 const fs = require("fs");
 
 const RUN_UPDATE = false;

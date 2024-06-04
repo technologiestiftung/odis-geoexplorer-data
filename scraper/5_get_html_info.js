@@ -21,7 +21,7 @@ function getHtmlInfo(mainCallback) {
           await new Promise((resolve) => setTimeout(resolve, 500));
           if (!htmlData.includes('Startseite von "Umweltatlas Berlin"')) {
             fs.writeFileSync(
-              `./scarper/data/datasets/${datasetName}/htmlDescription.json`,
+              `./scraper/data/datasets/${datasetName}/htmlDescription.json`,
               JSON.stringify(htmlData ? htmlData : [])
             );
           }

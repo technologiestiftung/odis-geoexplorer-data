@@ -272,5 +272,11 @@ cython_debug/
 #.idea/
 
 
-data/
+/markdowns/
+/scraper/data/
+/scraper/data.zip
+!/scraper/data/datasetsAll.json
+!/scraper/data/datasetsNew.json
+
 notes.md
+
