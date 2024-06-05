@@ -48,6 +48,8 @@ Make sure you have **Docker** installed and running locally. Then run
 npx supabase start
 ```
 
+This will set up a local Supabase DB for you.
+
 **2. Provide connection details**
 
 Duplicate the `.env.example` file and rename it to `.env`. Then provide either your local connection details or those from Supabase, depending on where you want to save your data.
@@ -62,7 +64,7 @@ You will also need to provide a key to use **OpenAI API**.
 
 **3. Generate embeddings**
 
-This script requests an embedding for each markdown file created earlier. The embedding will then be written to a DB. To run the script:
+This script requests an embedding for each markdown file created earlier. The embedding will then be written to your Supabase DB. To run the script:
 
 ```bash
 npm run embeddings
